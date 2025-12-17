@@ -1,0 +1,5 @@
+number_val_bands_coarse 8
+number_val_bands_fine 4
+number_cond_bands_coarse 8
+number_cond_bands_fine 4
+use_wfn_hdf5

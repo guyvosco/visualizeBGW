@@ -1,0 +1,7 @@
+number_val_bands 4
+number_cond_bands 4
+screened_coulomb_cutoff 10.0
+cell_slab_truncation
+screening_semiconductor
+use_symmetries_coarse_grid
+use_wfn_hdf5

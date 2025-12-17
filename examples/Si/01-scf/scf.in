@@ -1,0 +1,33 @@
+&control
+  prefix = 'Si'
+   calculation = 'scf'
+   restart_mode = 'from_scratch'
+   disk_io = 'low'
+   outdir = './'
+   wfcdir = './'
+   pseudo_dir = '../pseudos'
+/
+&system
+   ibrav = 2
+   nat = 2
+   ntyp = 1
+   ecutwfc = 30.0
+   celldm(1) = 10.2612
+/
+&electrons
+   electron_maxstep = 1500
+   conv_thr = 1.0d-10
+   mixing_mode = 'plain'
+   mixing_beta = 0.7
+   mixing_ndim = 8
+   diagonalization = 'david'
+   diago_full_acc = .true.
+   startingwfc = 'random'
+/
+ATOMIC_SPECIES
+Si 28.086 Si_NC_SR_PBE_dojo.upf
+ATOMIC_POSITIONS crystal
+Si               0.0000000000        0.0000000000        0.0000000000
+Si               0.2500000000        0.2500000000        0.2500000000
+K_POINTS automatic
+ 4 4 4 0 0 0

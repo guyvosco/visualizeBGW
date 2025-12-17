@@ -1,0 +1,16 @@
+number_val_bands_coarse 4
+number_val_bands_fine 4
+number_cond_bands_coarse 10
+number_cond_bands_fine 6
+
+use_symmetries_coarse_grid
+no_symmetries_fine_grid
+eqp_co_corrections
+
+screening_semiconductor
+write_eigenvectors 1000
+use_momentum
+energy_resolution 0.1
+
+use_wfn_hdf5
+

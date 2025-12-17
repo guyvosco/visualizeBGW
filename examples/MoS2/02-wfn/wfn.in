@@ -1,0 +1,50 @@
+&control
+   prefix = 'MoS2'
+   calculation = 'nscf'
+   restart_mode = 'from_scratch'
+   disk_io = 'low'
+   outdir = './'
+   wfcdir = './'
+   pseudo_dir = '../pseudos'
+   dipfield = .true.
+/
+&system
+   nbnd = 528
+   ibrav = 4
+   nat = 3
+   ntyp = 2
+   ecutwfc = 40.0
+   celldm(1) = 5.98620263
+   celldm(3) = 5.05088419
+   vdw_corr = 'grimme-d3'
+   dftd3_threebody = .false.
+   assume_isolated = '2D'
+   noncolin = .true.
+   lspinorb = .true.
+/
+&electrons
+   electron_maxstep = 1500
+   conv_thr = 1.0d-10
+   diagonalization = 'cg'
+   diago_full_acc = .true.
+   startingwfc = 'random'
+/
+ATOMIC_SPECIES
+Mo  95.95 Mo_NC_FR_PBE_dojo.upf
+ S  32.06  S_NC_FR_PBE_dojo.upf
+ATOMIC_POSITIONS crystal
+Mo               0.0000000000        0.0000000000        0.5000000000
+S                0.3333333330        0.6666666670        0.5979432060
+S                0.3333333330        0.6666666670        0.4020577940
+K_POINTS crystal
+   10
+  0.000000000  0.000000000  0.000000000   1.0
+  0.000000000  0.166666667  0.000000000   3.0
+  0.000000000  0.333333333  0.000000000   3.0
+  0.000000000  0.500000000  0.000000000   3.0
+  0.000000000  0.666666667  0.000000000   3.0
+  0.000000000  0.833333333  0.000000000   3.0
+  0.166666667  0.166666667  0.000000000   6.0
+  0.166666667  0.333333333  0.000000000   6.0
+  0.166666667  0.500000000  0.000000000   6.0
+  0.333333333  0.333333333  0.000000000   2.0

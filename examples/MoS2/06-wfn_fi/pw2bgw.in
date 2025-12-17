@@ -1,0 +1,11 @@
+&input_pw2bgw
+  prefix = "MoS2"
+  wfng_flag = .true.
+  wfng_kgrid = .true.
+  wfng_nk1 = 36
+  wfng_nk2 = 36
+  wfng_nk3 = 1
+  wfng_dk1 = 0
+  wfng_dk2 = 0
+  wfng_dk3 = 0
+/

@@ -15,64 +15,70 @@ BerkeleyGW offers robust tools for large-scale GW and BSE calculations, but expl
 visualizeBGW provides a unified interface and visualization toolkit that accelerates data analysis, improves reproducibility, and simplifies scientific interpretation.
 With this library, users will be able to interactively explore:
 
-* Band structures from mean-field and quasiparticle corrections
 * Wavefunction character and orbital projections
+* Band structures from mean-field and quasiparticle corrections
 * Components of the dielectric matrix
 * Optical absorption spectra (RPA and BSE)
-* Exciton contributions in real and reciprocal space
+* Exciton contributions
 
 ---
 
-## Project Structure (Draft)
+## Project Structure
 
 ```
 visualizeBGW/
-│
-├─ src/                 # Core visualization library
-│   ├─ io/                 # Input/output parsers
-│   ├─ analysis/           # Data manipulation utilities
-│   ├─ plotting/           # Matplotlib-based plotting functions
-│   └─ gui/                # GUI implementation
-├─ examples/
-├─ tests/
-├─ README.md
-└─ requirements.txt
+          │
+          ├─ src/visualizeBGW/             # Core visualization library
+          │                ├─ io/             # Input/output parsers
+          │                ├─ analysis/       # Data manipulation utilities
+          │                ├─ plotting/       # Matplotlib-based plotting functions
+          │                └─ gui/            # GUI implementation
+          │                    └─ pages/         # Pages classes
+          ├─ examples/                     # QE and BerkeleyGW calculations inputs
+          │        ├─ Si/                     # Bulk Silicon
+          │        └─ MoS2/                   # Transition metal dichalcogenide monolayer
+          ├─ tests/
+          ├─ README.md
+          └─ requirements.txt
 ```
 
-### Features (Planned)
+### Features:
 
 #### Data Parsing
-* Parse and process `.dat` outputs
-  - [ ] chi_converge.dat
-  - [ ] eqp.dat
-  - [ ] eigenvalues.dat
-* Read BerkeleyGW `HDF5` outputs
-  - [ ] WFN.h5
-  - [ ] epsmat.h5
-  - [ ] eigenvectors.h5
+* Parse and process BerkeleyGW outputs
+  - chi_converge.dat
+  - eqp.dat
+  - eigenvalues.dat
+* Read and analyse BerkelyGW HDF5 formats
+  - WFN.h5
+  - epsmat.h5
+  - eigenvectors.h5
+
+#### Export files
+* POSCAR - stractual geometry file format
+* XSF - 3D electron densities data
 
 #### Core Calculations
-  - [ ] High-symmetry paths
-  - [ ] Band-structure interpolation
-  - [ ] Excitonic component weights
+* Electron densities in real-space
+* High-symmetry paths
+* Broaden absorption spectrum
+* Excitonic component weights
 
 #### Visualization Tools
-  - [ ] DFT and GW-corrected quasiparticle band structure
-  - [ ] Convergence of $\chi$ with respect to empty orbitals
-  - [ ] *head* of the dielectric function $\epsilon(\omega)$
-  - [ ] RPA and BSE absorption spectra
-  - [ ] Exciton band contributions and $k$-resolved weights
+* Crystal structure visualization
+* Mean-field wavefunction projection in real-space
+* DFT and GW-corrected quasiparticle band structure
+* Convergence of $\chi$ with respect to empty orbitals
+* Convergence of the Coulomb-hole sum value vs. the number of bands included in the sum
+* *head* of the dielectric function $\epsilon(\omega)$
+* RPA and BSE absorption spectra
+* Exciton band contributions and $k$-resolved weights
 
-#### GUI (Tkinter / PyQt / Streamlit – TBD)
-* File browser for loading BerkeleyGW output folders
+#### GUI
 * Tabs for each visualization module
-* Interactive parameter selection (energy windows, $k$-paths, etc.)
-* Export plots to PNG/PDF
-
-### Stretch Goals (Optional)
-- [ ] 3D crystal structure visualization
-- [ ] Real-space wavefunction projections
-- [ ] Real-space exciton visualization
+* File browser for loading BerkeleyGW output files
+* Interactive parameter selection
+* Export structure visualization data
 
 ---
 
@@ -81,6 +87,8 @@ visualizeBGW/
 * **Python 3**
 * **h5py** for HDF5 reading
 * **NumPy / SciPy** for numerical processing
+* **ase** for atomic properties data
 * **matplotlib** for plotting
-* **PyQt6 / Tkinter / Streamlit** for the GUI (final choice TBD)
+* **PyVista** for 3D visualiztion
+* **PySide6** for the GUI
 * **pytest** for testing

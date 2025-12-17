@@ -1,0 +1,11 @@
+&input_pw2bgw
+  prefix = "Si"
+  wfng_flag = .true.
+  wfng_kgrid = .true.
+  wfng_nk1 = 8
+  wfng_nk2 = 8
+  wfng_nk3 = 8
+  wfng_dk1 = 0
+  wfng_dk2 = 0
+  wfng_dk3 = 0
+/

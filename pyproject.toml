@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "visualizeBGW"
+version = "0.1.0"
+description = "A Python toolkit and GUI for exploring BerkeleyGW outputs"
+readme = "README.md"
+requires-python = ">=3.9"
+
+authors = [
+  { name = "Guy Vosco", email = "guy.vosco@weizmann.ac.il" }
+]
+
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "h5py",
+    "PySide6",
+    "pytest; extra == 'dev'"
+]
+
+[project.scripts]
+visualizeBGW-gui = "visualizeBGW.gui.main:main"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "pyproject.toml"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/visualizeBGW"]
