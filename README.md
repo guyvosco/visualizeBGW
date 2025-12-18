@@ -104,7 +104,16 @@ You can install **visualizeBGW** directly from the project directory:
 
 ## Usage
 
-1. Launching the GUI:
+1. Using the Python API
+
+    The library can be used directly in scripts or notebooks. All functionality is available through the top-level modules:
+    * visualizeBGW.io – Readers for BerkeleyGW text and HDF5 files
+    * visualizeBGW.analysis – Numerical processing (exciton components, absorption spectra, wavefunctions projection, etc.)
+    * visualizeBGW.plotting – Matplotlib and PyVista visualizations.
+
+    See [Doc](./documentation.md) for full available methods description and the attached [examples](./examples/).
+
+2. Launching the GUI:
 
     After installation, run:
     ```
@@ -125,15 +134,6 @@ You can install **visualizeBGW** directly from the project directory:
 
     Each page includes file selectors, parameter inputs, and plotting buttons.
     3D views open in separate PyVista windows, ensuring the Qt event loop remains stable.
-
-2. Using the Python API
-
-    The library can also be used directly in scripts or notebooks. All functionality is available through the top-level modules:
-    * visualizeBGW.io – Readers for BerkeleyGW text and HDF5 files
-    * visualizeBGW.analysis – Numerical processing (exciton components, absorption spectra, wavefunctions projection, etc.)
-    * visualizeBGW.plotting – Matplotlib and PyVista visualizations.
-
-    See [Doc](documentation.md) for full available methods description.
 
 ---
 

@@ -235,7 +235,7 @@ def plot_bandstructure(ax, kpts, emf, eqp, hsp, nv, use_emf=True, use_qp=True):
     Description:
         Generates a band structure plot showing mean-field and/or quasiparticle energies along a defined k-point path, with high-symmetry point labels.
     """
-    hsp_labels = []
+    hsp_labels = [hsp[0][0]]
     hsp_points = np.array([0], dtype=int)
     path = np.array([], dtype=int)
     for i in range(1, len(hsp)):
@@ -263,12 +263,17 @@ def plot_bandstructure(ax, kpts, emf, eqp, hsp, nv, use_emf=True, use_qp=True):
             label="GW QP",
         )
     if use_emf and use_qp:
-        ax.legend()
+        handles, labels = ax.get_legend_handles_labels()
+        unique = {}
+        for h, l in zip(handles, labels):
+            if l not in unique:
+                unique[l] = h
+        ax.legend(unique.values(), unique.keys())
     ax.set_xticks(hsp_points)
     ax.set_xticklabels(hsp_labels)
     ax.set_xlabel("$k$-Path")
     ax.set_xlim([0, len(path) - 1])
-    ax.set_ylabel("$E - E_f$ (eV)")
+    ax.set_ylabel("$E - E_{vbm}$ (eV)")
     ax.grid(True)
     ax.figure.tight_layout()
 
