@@ -1,8 +1,21 @@
+import os
 import numpy as np
 from ase.data import chemical_symbols
 from ..analysis.units import bohr2angstrom
 
+
 def export_structure(path, structure):
+    """
+    Input:
+        path (str) — directory
+        structure (dict) — lattice & atoms
+
+    Output:
+        Writes structure.vasp in POSCAR format
+
+    Description:
+        Exports structural geometry to a VASP-compatible file.
+    """
     uniques = []
     counts = []
     last_elem = None
@@ -17,7 +30,7 @@ def export_structure(path, structure):
 
     prefix = " ".join(f"{e}{n}" for e, n in zip(uniques, counts))
 
-    with open(path + "/structure.vasp", "w") as f:
+    with open(os.path.join(path, "structure.vasp"), "w", encoding="utf-8") as f:
         f.write(prefix + "\n")
         f.write(" 1.0\n")
 
@@ -45,39 +58,61 @@ def export_structure(path, structure):
             fx, fy, fz = pos @ inv_lat
             f.write(f"  {fx:.10f}  {fy:.10f}  {fz:.10f}\n")
 
-def export_xsf(xsf_dir, rho, mf_header):
-    alat = mf_header['crystal']['alat']
-    avec = mf_header['crystal']['avec']
-    nat = mf_header['crystal']['nat']
-    atyp = mf_header['crystal']['atyp']
-    apos = mf_header['crystal']['apos']
-    fftgrid = mf_header['gspace']['FFTgrid']
 
-    with open(xsf_dir + "/projwfn.xsf", 'w') as f:
-        f.write(' CRYSTAL\n')
-        f.write(' PRIMVEC\n')
+def export_xsf(xsf_dir, rho, mf_header):
+    """
+    Input:
+        xsf_dir (str) — directory
+        rho (ndarray) — scalar field
+        mf_header (dict) — structural metadata
+
+    Output:
+        Writes projwfn.xsf file
+
+    Description:
+        Saves the 3D real-space wavefunction density into XSF format for XCrySDen.
+    """
+    alat = mf_header["crystal"]["alat"]
+    avec = mf_header["crystal"]["avec"]
+    nat = mf_header["crystal"]["nat"]
+    atyp = mf_header["crystal"]["atyp"]
+    apos = mf_header["crystal"]["apos"]
+    fftgrid = mf_header["gspace"]["FFTgrid"]
+
+    with open(os.path.join(xsf_dir, "projwfn.xsf"), "w", encoding="utf-8") as f:
+        f.write(" CRYSTAL\n")
+        f.write(" PRIMVEC\n")
         for vec in avec:
-            vec *= alat * bohr2angstrom
-            f.write('    %1.9f    %1.9f    %1.9f\n' % (vec[0], vec[1], vec[2]))
-        f.write(' PRIMCOORD\n')
-        f.write('          %i          1\n' % nat)
+            vec_ang = vec * alat * bohr2angstrom
+            f.write(
+                f"    {vec_ang[0]:1.9f}    {vec_ang[1]:1.9f}    {vec_ang[2]:1.9f}\n"
+            )
+        f.write(" PRIMCOORD\n")
+        f.write(f"          {nat}          1\n")
         for i, pos in enumerate(apos):
-            pos *= alat * bohr2angstrom
-            f.write('%s         %1.9f    %1.9f    %1.9f\n' % (chemical_symbols[atyp[i]], pos[0], pos[1], pos[2]))
-        f.write('BEGIN_BLOCK_DATAGRID_3D\n')
-        f.write('3D_PWSCF\n')
-        f.write('BEGIN_DATAGRID_3D_UNKNOWN\n')
-        f.write('          %i          %i          %i\n' % (fftgrid[0] + 1, fftgrid[1] + 1, fftgrid[2] + 1))
-        f.write('  0.000000  0.000000  0.000000\n')
+            pos_ang = pos * alat * bohr2angstrom
+            f.write(
+                f"{chemical_symbols[atyp[i]]}         {pos_ang[0]:1.9f}    {pos_ang[1]:1.9f}    {pos_ang[2]:1.9f}\n"
+            )
+        f.write("BEGIN_BLOCK_DATAGRID_3D\n")
+        f.write("3D_PWSCF\n")
+        f.write("BEGIN_DATAGRID_3D_UNKNOWN\n")
+        f.write(
+            f"          {fftgrid[0] + 1}          {fftgrid[1] + 1}          {fftgrid[2] + 1}\n"
+        )
+        f.write("  0.000000  0.000000  0.000000\n")
         for vec in avec:
-            f.write('    %1.9f    %1.9f    %1.9f\n' % (vec[0], vec[1], vec[2]))
+            vec_ang = vec * alat * bohr2angstrom
+            f.write(
+                f"    {vec_ang[0]:1.9f}    {vec_ang[1]:1.9f}    {vec_ang[2]:1.9f}\n"
+            )
         i = 0
         for z in list(range(fftgrid[2])) + [0]:
             for y in list(range(fftgrid[1])) + [0]:
                 for x in list(range(fftgrid[0])) + [0]:
-                    f.write('  %0.6e' % rho[x, y, z])
+                    f.write(f"  {rho[x, y, z]:0.6e}")
                     i += 1
                     if i % 6 == 0:
-                        f.write('\n')
-        f.write('\nEND_DATAGRID_3D\n')
-        f.write('END_BLOCK_DATAGRID_3D')
+                        f.write("\n")
+        f.write("\nEND_DATAGRID_3D\n")
+        f.write("END_BLOCK_DATAGRID_3D")

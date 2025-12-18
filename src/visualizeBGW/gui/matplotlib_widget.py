@@ -27,6 +27,8 @@ from __future__ import annotations
 
 from typing import Optional, Tuple
 
+import numpy as np
+
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.backends.backend_qtagg import NavigationToolbar2QT
 from matplotlib.figure import Figure
@@ -72,7 +74,6 @@ class MatplotlibCanvas(FigureCanvasQTAgg):
         Draw a simple dummy plot.
         Useful as a placeholder while wiring up the real logic.
         """
-        import numpy as np
 
         self.axes.cla()
         x = np.linspace(0, 2 * np.pi, 300)

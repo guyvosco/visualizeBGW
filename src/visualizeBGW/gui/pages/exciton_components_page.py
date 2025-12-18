@@ -22,7 +22,7 @@ Plotting:
   )
 
 3D Brillouin zone:
-- plot_eigenvector_k_3D(pl, Ak, exciton_header, mf_header)
+- plot_eigenvector_k_3d(pl, Ak, exciton_header, mf_header)
   where pl = pv.Plotter()
 
 To avoid PyVista/Qt conflicts and segfaults, the 3D plot is done
@@ -54,11 +54,11 @@ from ...io.berkeleygw_readers import read_eigenvalues
 from ...analysis.berkeleygw_processing import get_eigenvectors_components
 from ...plotting.berkeleygw_plots import (
     plot_eigenvector_components,
-    plot_eigenvector_k_3D,
+    plot_eigenvector_k_3d,
 )
 
 
-def _pv_worker_plot_eigenvector_k_3D(Ak, exciton_header, mf_header) -> None:
+def _pv_worker_plot_eigenvector_k_3d(Ak, exciton_header, mf_header) -> None:
     """
     Worker function for plotting the 3D Brillouin zone in a separate process.
 
@@ -67,10 +67,10 @@ def _pv_worker_plot_eigenvector_k_3D(Ak, exciton_header, mf_header) -> None:
     """
     try:
         pl = pv.Plotter()
-        plot_eigenvector_k_3D(pl, Ak, exciton_header, mf_header)
+        plot_eigenvector_k_3d(pl, Ak, exciton_header, mf_header)
         pl.show(auto_close=True)
     except Exception as exc:  # noqa: BLE001
-        print("[_pv_worker_plot_eigenvector_k_3D] Error:", exc)
+        print("[_pv_worker_plot_eigenvector_k_3d] Error:", exc)
 
 
 class ExcitonComponentsPage(QWidget):
@@ -440,7 +440,7 @@ class ExcitonComponentsPage(QWidget):
         try:
             self._set_status("launching 3D k-space viewer...")
             p = mp.Process(
-                target=_pv_worker_plot_eigenvector_k_3D,
+                target=_pv_worker_plot_eigenvector_k_3d,
                 args=(Ak, exciton_header, mf_header),
             )
             p.start()

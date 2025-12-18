@@ -138,7 +138,7 @@ class CrystalStructurePage(QWidget):
         file_row = QHBoxLayout()
         file_row.setSpacing(8)
 
-        file_label = QLabel("WFN.h5:")
+        file_label = QLabel("WFN.h5 file:")
         self.wfn_edit = QLineEdit()
         self.wfn_edit.setPlaceholderText("Select WFN.h5 …")
         self.wfn_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -201,7 +201,9 @@ class CrystalStructurePage(QWidget):
 
         export_label = QLabel("Output directory:")
         self.export_dir_edit = QLineEdit()
-        self.export_dir_edit.setPlaceholderText("Choose directory to save structure.vasp …")
+        self.export_dir_edit.setPlaceholderText(
+            "Choose directory to save structure.vasp …"
+        )
         self.export_dir_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.export_dir_edit.setMinimumWidth(350)
 
@@ -452,7 +454,10 @@ class CrystalStructurePage(QWidget):
             p.start()
         except Exception as exc:  # noqa: BLE001
             self._set_status(f"Plot error: {exc}")
-            print("[CrystalStructurePage] Error while spawning structure plot process:", exc)
+            print(
+                "[CrystalStructurePage] Error while spawning structure plot process:",
+                exc,
+            )
             return
 
         self._set_status("3D viewer running")

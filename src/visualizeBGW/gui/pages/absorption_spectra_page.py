@@ -123,7 +123,9 @@ class AbsorptionSpectraPage(QWidget):
         self.main_file_edit.setMinimumWidth(450)
 
         main_browse = QPushButton("Browse…")
-        main_browse.clicked.connect(lambda: self._browse_file(self.main_file_edit, main=True))
+        main_browse.clicked.connect(
+            lambda: self._browse_file(self.main_file_edit, main=True)
+        )
 
         main_file_row.addWidget(main_file_label)
         main_file_row.addWidget(self.main_file_edit)
@@ -155,7 +157,9 @@ class AbsorptionSpectraPage(QWidget):
         self.noeh_file_edit.setMinimumWidth(450)
 
         noeh_browse = QPushButton("Browse…")
-        noeh_browse.clicked.connect(lambda: self._browse_file(self.noeh_file_edit, main=False))
+        noeh_browse.clicked.connect(
+            lambda: self._browse_file(self.noeh_file_edit, main=False)
+        )
 
         self.status_label = QLabel("")
         self.status_label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
@@ -411,6 +415,7 @@ class AbsorptionSpectraPage(QWidget):
             return
 
         # Optional noeh spectrum
+        noeh_energy = None
         noeh_spectra = None
         if self._load_noeh_eigenvalues(force=False):
             if self._eigs_noeh is not None and self._dipole_noeh is not None:
@@ -420,12 +425,12 @@ class AbsorptionSpectraPage(QWidget):
                         self._eigs_noeh, self._dipole_noeh, broadening, broad_func
                     )
                     # Assume same energy grid; if not, user should handle resampling upstream
+                    noeh_energy = energy_noeh
                     noeh_spectra = spectra_noeh
                 except Exception as exc:  # noqa: BLE001
                     self._set_status(f"Noeh spectrum error: {exc}")
-                    print(
-                        "[AbsorptionSpectraPage] Error computing noeh spectrum:", exc
-                    )
+                    print("[AbsorptionSpectraPage] Error computing noeh spectrum:", exc)
+                    noeh_energy = None
                     noeh_spectra = None
 
         # Plot
@@ -441,6 +446,7 @@ class AbsorptionSpectraPage(QWidget):
                 spectra,
                 xmin,
                 xmax,
+                noeh_energy=noeh_energy,
                 noeh_spectra=noeh_spectra,
             )
             self.plot_widget.canvas.draw()

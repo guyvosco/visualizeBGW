@@ -15,10 +15,10 @@ Options:
     (-x, +x), (-y, +y), (-z, +z)
 
 3D plotting (PyVista, new window, separate process):
-- times_X = [n_minus_x, n_plus_x]
-- times_Y = [n_minus_y, n_plus_y]
-- times_Z = [n_minus_z, n_plus_z]
-- plot_proj_wfn(pl, structure, rho, times_X, times_Y, times_Z)
+- times_x = [n_minus_x, n_plus_x]
+- times_y = [n_minus_y, n_plus_y]
+- times_z = [n_minus_z, n_plus_z]
+- plot_proj_wfn(pl, structure, rho, times_x, times_y, times_z)
 
 Export:
 - export_xsf(xsf_dir, rho, mf_header)
@@ -78,7 +78,7 @@ def _pv_worker_wavefunction_projection(
         rho, mf_header = calc_rho(wfn_path, band_index, kpt_array)
 
         pl = pv.Plotter()
-        # times_X, times_Y, times_Z are lists in the API, but we pass as lists
+        # times_x, times_y, times_z are lists in the API, but we pass as lists
         plot_proj_wfn(
             pl,
             structure,
@@ -114,7 +114,9 @@ class WavefunctionProjectionPage(QWidget):
         # Cached rho/mf_header for export
         self._rho = None
         self._mf_header = None
-        self._current_params: Optional[Tuple[str, int, Tuple[float, float, float]]] = None
+        self._current_params: Optional[Tuple[str, int, Tuple[float, float, float]]] = (
+            None
+        )
 
         self._build_ui()
 
@@ -150,7 +152,7 @@ class WavefunctionProjectionPage(QWidget):
         file_row = QHBoxLayout()
         file_row.setSpacing(8)
 
-        file_label = QLabel("WFN.h5:")
+        file_label = QLabel("WFN.h5 file:")
         self.wfn_edit = QLineEdit()
         self.wfn_edit.setPlaceholderText("Select WFN.h5 …")
         self.wfn_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -283,7 +285,9 @@ class WavefunctionProjectionPage(QWidget):
 
         # Right side: placeholder Matplotlib widget (keeps layout consistent)
         self.placeholder_plot = MatplotlibWidget(self)
-        self.placeholder_plot.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.placeholder_plot.setSizePolicy(
+            QSizePolicy.Expanding, QSizePolicy.Expanding
+        )
         center_row.addWidget(self.placeholder_plot, stretch=1)
 
         main_layout.addLayout(center_row)
@@ -411,14 +415,9 @@ class WavefunctionProjectionPage(QWidget):
         except ValueError:
             self._set_status("Band index must be an integer")
             return None
-        if idx < 0:
-            self._set_status("Band index must be ≥ 0")
-            return None
         return idx
 
     def _set_band_index(self, idx: int) -> None:
-        if idx < 0:
-            idx = 0
         self.band_edit.setText(str(idx))
 
     def _increment_band(self) -> None:
@@ -431,8 +430,7 @@ class WavefunctionProjectionPage(QWidget):
         idx = self._get_band_index()
         if idx is None:
             return
-        if idx > 0:
-            self._set_band_index(idx - 1)
+        self._set_band_index(idx - 1)
 
     # -------------------------
     # General helpers

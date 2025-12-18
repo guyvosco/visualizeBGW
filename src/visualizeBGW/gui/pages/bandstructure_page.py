@@ -236,8 +236,10 @@ class BandstructurePage(QWidget):
 
         minus_button = QPushButton("-")
         minus_button.setFixedWidth(24)
-        minus_button.clicked.connect(lambda checked=False, btn=minus_button: self._remove_hsp_row(btn))
-        
+        minus_button.clicked.connect(
+            lambda checked=False, btn=minus_button: self._remove_hsp_row(btn)
+        )
+
         row_layout.addWidget(label_edit)
         row_layout.addWidget(lbl_k_equals)
         row_layout.addWidget(kx_edit)

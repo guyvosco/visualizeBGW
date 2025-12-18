@@ -9,7 +9,6 @@ from typing import Callable, Dict, Optional
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QApplication,
     QHBoxLayout,
     QLabel,
     QMainWindow,
@@ -32,6 +31,7 @@ from .pages.exciton_components_page import ExcitonComponentsPage
 # -------------------------
 # Menu page
 # -------------------------
+
 
 class MenuPage(QWidget):
     """
@@ -83,7 +83,9 @@ class MenuPage(QWidget):
         main_layout.addLayout(header_layout)
 
         # Small vertical spacer between header and button rows
-        main_layout.addSpacerItem(QSpacerItem(0, 20, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        main_layout.addSpacerItem(
+            QSpacerItem(0, 20, QSizePolicy.Minimum, QSizePolicy.Minimum)
+        )
 
         # Rows: Structure, GW, BSE
         main_layout.addLayout(
@@ -154,7 +156,9 @@ class MenuPage(QWidget):
         for text, page_name in buttons:
             btn = QPushButton(text)
             btn.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-            btn.clicked.connect(lambda checked=False, name=page_name: self._navigate(name))
+            btn.clicked.connect(
+                lambda checked=False, name=page_name: self._navigate(name)
+            )
             row_layout.addWidget(btn)
 
         # Spacer so buttons don't stretch to full width if not needed
@@ -173,6 +177,7 @@ class MenuPage(QWidget):
 # -------------------------
 # Main window
 # -------------------------
+
 
 class MainWindow(QMainWindow):
     """
@@ -208,7 +213,7 @@ class MainWindow(QMainWindow):
         wf_page = WavefunctionProjectionPage(on_back=lambda: self.show_page("menu"))
         idx = self._stack.addWidget(wf_page)
         self._page_indices["structure_wavefunction"] = idx
-        
+
         chi_page = ChiConvergencePage(on_back=lambda: self.show_page("menu"))
         chi_index = self._stack.addWidget(chi_page)
         self._page_indices["gw_chi"] = chi_index

@@ -63,7 +63,9 @@ class CHConvergencePage(QWidget):
         # Data cache
         self._ch_converge_data: Optional[Dict] = None
         self._current_file: Optional[str] = None
-        self._kpt_keys: List = []  # ordered list of dict keys corresponding to combo entries
+        self._kpt_keys: List = (
+            []
+        )  # ordered list of dict keys corresponding to combo entries
 
         self._build_ui()
 

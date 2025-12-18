@@ -14,12 +14,17 @@ authors = [
 ]
 
 dependencies = [
-    "numpy",
-    "matplotlib",
-    "h5py",
-    "PySide6",
-    "pytest; extra == 'dev'"
+  "numpy",
+  "SciPy",
+  "matplotlib",
+  "h5py",
+  "ase",
+  "PyVista",
 ]
+
+[project.optional-dependencies]
+gui = ["PySide6"]
+dev = ["pytest", "pylint"]
 
 [project.scripts]
 visualizeBGW-gui = "visualizeBGW.gui.main:main"

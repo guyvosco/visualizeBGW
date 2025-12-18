@@ -64,7 +64,9 @@ class ChiConvergencePage(QWidget):
         # Data cache
         self._chi_converge_data: Optional[Dict] = None
         self._current_file: Optional[str] = None
-        self._qpt_keys: List = []  # ordered list of dict keys corresponding to combo entries
+        self._qpt_keys: List = (
+            []
+        )  # ordered list of dict keys corresponding to combo entries
 
         self._build_ui()
 
@@ -314,4 +316,3 @@ class ChiConvergencePage(QWidget):
             return
 
         self._set_status("Done")
-
