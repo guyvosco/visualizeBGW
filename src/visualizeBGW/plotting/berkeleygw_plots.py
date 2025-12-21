@@ -417,12 +417,12 @@ def plot_eigenvector_components(
     axb.scatter(
         np.full(nv, 0.5),
         np.flip(y_valence),
-        s=Av * bands_scale,
+        s=Av[0, :] * bands_scale,
         color="blue",
         alpha=0.75,
     )
     axb.scatter(
-        np.full(nc, 0.5), y_conduction, s=Ac * bands_scale, color="red", alpha=0.75
+        np.full(nc, 0.5), y_conduction, s=Ac[0, :] * bands_scale, color="red", alpha=0.75
     )
 
     yticks = np.concatenate([y_valence, y_conduction])
