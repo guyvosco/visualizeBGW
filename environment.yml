@@ -1,0 +1,16 @@
+name: visualizebgw
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10
+  - numpy
+  - scipy
+  - h5py
+  - ase
+  - matplotlib
+  - pyvista
+  - pyside6
+  - pytest
+  - pip
+  - pip:
+      - -e .

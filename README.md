@@ -78,7 +78,7 @@ visualizeBGW/
 
 ---
 
-## Dependencies
+## Dependencies and Installation
 
 * **Python 3.9+**
 * **h5py** for HDF5 reading
@@ -89,14 +89,24 @@ visualizeBGW/
 * **PySide6** for the GUI
 * **pytest** for testing
 
-## Installation
+### Installation
 
-You can install **visualizeBGW** directly from the project directory:
+#### Option 1: Conda (recommended)
+
+For a fully working setup, use the provided Conda environment:
+
+```
+conda env create -f environment.yml
+conda activate visualizebgw
+```
+
+Option 2: pip installation
+
+You can also install the package directly from the project directory:
 > If you plan to use only the Python library (without the GUI), install:
 > ```
 > pip install .
 > ```
-
 > For the full GUI and 3D visualization features, install with the optional extras:
 > ```
 > pip install visualizeBGW[gui]
