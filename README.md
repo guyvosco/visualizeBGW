@@ -149,7 +149,7 @@ You can also install the package directly from the project directory:
 
 ## Notes & Limitations
 
-* visualizeBGW is tested on macOS and Linux with Python 3.9–3.13. Windows may work but PyVista/VTK support varies.
+* visualizeBGW is tested on macOS and Linux with Python 3.10–3.13. Windows may work but PyVista/VTK support varies.
 * HDF5 parsing assumes BerkeleyGW’s modern file schema. Older versions may require adjustments.
 * Very large wavefunction grids can be memory-intensive, PyVista visualization is optimized but not memory-free.
 * Multiprocessing-based 3D visualization may behave differently on Windows vs. Linux/macOS.
